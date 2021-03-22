@@ -20,7 +20,32 @@ module.exports = (app) => {
   });
 
   app.post("/api/notes", (req, res) => {
+    if (notes.length === 0) {
+      req.body.id = 1
+    } else {
+      req.body.id = (notes[notes.length - 1].id + 1);
+    }
     notes.push(req.body);
-    res.json(true)
+    res.json(true);
+  });
+
+  app.get("/api/notes/:id", (req, res) => {
+    notes.forEach(note => {
+      if (req.params.id == note.id) {
+        res.json(note)
+      }
+    })
+    res.json(false)
+  });
+
+  app.delete("/api/notes/:id", (req, res) => {
+    notes.forEach((note, index) => {
+      if(req.params.id == note.id) {
+        notes.splice(index, 1)
+        notes = notes.slice()
+        res.json(notes)
+      }
+    })
+    res.json(false)
   })
 }
