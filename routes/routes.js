@@ -42,10 +42,9 @@ module.exports = (app) => {
     notes.forEach((note, index) => {
       if(req.params.id == note.id) {
         notes.splice(index, 1)
-        notes = notes.slice()
-        res.json(notes)
+        res.json(true)
       }
     })
     res.json(false)
-  })
+  });
 }
